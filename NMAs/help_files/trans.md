@@ -1,0 +1,3 @@
+### Tips
+
+The three input boxes here can help users customize the generated aggregated data based on their own data. **"The max timepoint"** refers to the longest start timepoint in the aggregated data.(In the melanoma network, (1) we want to set the start timepoint sequence as "0,3,6,9,12,15,18,\~"; (2) and the longest follow-up time is 73 months; thus, we input 72 here). **"Step of the timepoint"** refers to the step of the start timepoint sequence. (Similarly, the sequence of "0,3,6,9,12,15,18,\~", the step is 3 here). **"The start timepoint"** means the start time of each time interval. (In the melanoma network, 0 is the start time of the time interval of 0-3,...,72 is the start time of the time interval of 72 to the end)

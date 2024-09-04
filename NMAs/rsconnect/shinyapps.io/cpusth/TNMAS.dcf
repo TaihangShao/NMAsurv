@@ -1,0 +1,10 @@
+name: TNMAS
+title:
+username: cpusth
+account: cpusth
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12299799
+bundleId: 8846608
+url: https://cpusth.shinyapps.io/TNMAS/
+version: 1
