@@ -1,7 +1,7 @@
 ## NMAsurv: An R shiny application for network meta-analysis based on survival data
-**Time:**  April 14, 2024 <br>
+**Time:**  April 14, 2025 <br>
 **Title:**  NMAsurv<br>
-**Date:**  2025-2-4<br>
+**Date:**  2025-4-14<br>
 **Author:**  Taihang Shao (travis_shao@outlook.com);Mingye Zhao (3220040596@stu.cpu.edu.cn);Fenghao Shi (fenghao.shi@pkuircma.org.cn);Mingjun Rui (mingjunrui@link.cuhk.edu.hk);Wenxi Tang (tokammy@cpu.edu.cn) <br>
 **Description:**  This user-friendly application can be used to conduct network meta-analysis based on reconstructed survival data. <br>
 **Constructed Based on:**  R (4.3.1)<br>
