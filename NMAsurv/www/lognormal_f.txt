@@ -1,0 +1,40 @@
+model{
+  for (i in 1:Nobs){ 
+
+ # likelihood   
+  r[i] ~ dbin(p[i], n[i]) 
+  
+  p[i]<-1-exp(-h[i]*dt[i]) 
+  
+  h[i]<-pow(2*3.1415926,-0.5)*exp(-pow((log(time[i])-nu[i])/exp(theta[i]),2)*0.5) / (exp(theta[i])*time[i]*phi(-(log(time[i])-nu[i])/exp(theta[i])))
+
+
+  nu[i]<-mu[s[i],1]+md[s[i],1]*(1-equals (k[i], b[i]))
+  theta[i]<-mu[s[i],2]+md[s[i],2]*(1-equals (k[i], b[i]))
+}
+
+  for(k in 1 :Ns){ 
+  
+  # NS=number of studies in dataset
+  # delta[k,1:2]~dmnorm(md[k,1:2],omega[1:2,1:2])
+  
+  md[k,1]<-d[ks[k],1]-d[bs[k],1]
+  md[k,2]<-d[ks[k],2]-d[bs[k],2]
+  
+  }
+
+  # priors
+  d[1,1]<-0
+  d[1,2]<-0
+  
+  for(j in 2 :Ntrt){ # NT=number of treatments
+  d[j,1:2] ~ dmnorm(mean[1:2],prec2[,])
+  }
+  
+  for(k in 1 :Ns){
+  mu[k,1:2] ~ dmnorm(mean[1:2],prec2[,])
+  }
+  
+  # omega[1:2, 1:2] ~ dwish(R[1:2,1:2],2)
+  }
+
