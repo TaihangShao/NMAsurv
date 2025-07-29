@@ -9,8 +9,6 @@
 **License:**  GPL-2<br>
 **Citation:**  Shao T, Zhao M, Shi F, Rui M, Tang W. NMAsurv: An R Shiny application for network meta-analysis based on survival data. Research Synthesis Methods. Published online 2025:1-15. doi:10.1017/rsm.2025.10020
         
-        br>
-        
         
         
         
