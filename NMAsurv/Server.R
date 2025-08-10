@@ -195,7 +195,7 @@ server <- function(input, output, session) {
   })
   
   observe({
-    if(!is.null(input$uploade2) || input$FCexample2 > 0) {
+    if(!is.null(input$upload2) || input$FCexample2 > 0) {
       # session$sendCustomMessage('enableTab', list(enable = TRUE))
       session$sendCustomMessage('enableTab2', list(enable = TRUE))
       session$sendCustomMessage('enableTab4', list(enable = TRUE))
@@ -8240,6 +8240,7 @@ server <- function(input, output, session) {
   
 ### final line 
 }
+
 
 
 
