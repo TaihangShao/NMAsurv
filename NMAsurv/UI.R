@@ -397,6 +397,7 @@ dashboardPage(
               column(width = 12,
                      wellPanel(
                        class = "scrollable-panel",
+                       HTML("<h5><u> Jun 7, 2026 : Version 1.6 Some bugs in PH assumption Test plotting has been fixed.</u></h5>"),
                        HTML("<h5><u> Jan 21, 2025 : Version 1.5 The user interface has been greatly improved and some features have been added.</u></h5>"),
                        HTML("<div style='line-height: 1;'> 1.The user interface is more integrated, and instructions are added for each section to 
                        facilitate users to use it step by step; <br>

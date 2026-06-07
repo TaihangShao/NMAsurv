@@ -496,8 +496,6 @@ server <- function(input, output, session) {
       shinyalert("Warning!", "You should not select the same treatment in this test.", type = "error")
     } else {
       data<-as.data.frame(values$sheet3)
-      study<-unique(data$study)
-      treatment<-unique(data$treatment)
       
       data0 <- data %>%
         filter(study %in% input$pht_studyInput,
@@ -507,6 +505,15 @@ server <- function(input, output, session) {
       df_srp <- cox.zph(fit)
       fit1<-survfit(Surv(time, event) ~ arm, data = data0)
       fit2<-tidy(fit1)
+      treatment_key <- data0 %>%
+        distinct(arm, treatment) %>%
+        arrange(arm) %>%
+        mutate(strata = paste0("arm=", arm))
+      fit2 <- fit2 %>%
+        mutate(strata = as.character(strata)) %>%
+        left_join(treatment_key, by = "strata") %>%
+        mutate(treatment_label = ifelse(is.na(treatment), strata, treatment),
+               treatment_label = factor(treatment_label, levels = unique(treatment_key$treatment)))
       resid <- residuals(fit, type = "martingale")
       
       # get the p value
@@ -529,7 +536,7 @@ server <- function(input, output, session) {
                      point.col = "red",
                      point.size = 2,
                      point.shape = 19,
-                     point.alpha = 2,
+                     point.alpha = 0.8,
                      ggtheme = theme(
                        axis.title.x = element_text(size = 16),  # x轴标题字体大小和样式
                        axis.title.y = element_text(size = 16),  # y轴标题字体大小和样式
@@ -541,7 +548,19 @@ server <- function(input, output, session) {
                        panel.background = element_rect(fill = "white"),
                        panel.grid.major = element_line(colour = "white"),
                        panel.border = element_rect(color = "black", fill = NA, size = 1)
-                     )) +  xlab("Time (in months)") + labs(title = "Schoenfeld residual plot (Time in months)")
+                     ))
+        pht_labels <- list(xlab("Time (in months)"), labs(title = "Schoenfeld residual plot (Time in months)"))
+        if (inherits(f1, "ggplot")) {
+          f1 <- f1 + pht_labels
+        } else if (is.list(f1)) {
+          f1[] <- lapply(f1, function(plot) {
+            if (inherits(plot, "ggplot")) {
+              plot + pht_labels
+            } else {
+              plot
+            }
+          })
+        }
         print(f1)
         values$plot_pht_1<-f1
       })
@@ -572,15 +591,13 @@ server <- function(input, output, session) {
       
       ### Log-log
       output$plot_pht_2<-renderPlot({
-        f2<-ggplot(fit2, aes(x = time, color = strata)) +
+        f2<-ggplot(fit2, aes(x = time, color = treatment_label)) +
           geom_step(aes(y = log(-log(estimate))),linewidth=1) +
           xlab("Log(Time) (in Months)") +
           scale_x_log10(labels = label_number())+
           ylab("Log(-Log(Survival Probability))") +
           labs(title="Log-Log Plot (Time in months)")+
-          scale_color_discrete(
-            name = "Treatment", 
-            labels = c(treatment[1], treatment[2]))+
+          scale_color_discrete(name = "Treatment")+
           theme(
             axis.title.x = element_text(size = 16),  # x轴标题字体大小和样式
             axis.title.y = element_text(size = 16),  # y轴标题字体大小和样式
